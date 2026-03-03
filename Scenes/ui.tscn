@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dj0ftsvfv3j4t"]
+
+[ext_resource type="Script" uid="uid://s6fr17x4ilyw" path="res://Scripts/ui.gd" id="1_jxero"]
+
+[node name="UI" type="CanvasLayer" unique_id=1843590420]
+follow_viewport_enabled = true
+script = ExtResource("1_jxero")
+
+[node name="FPS" type="Label" parent="." unique_id=827849368]
+offset_right = 40.0
+offset_bottom = 23.0
