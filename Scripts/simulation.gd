@@ -1,9 +1,9 @@
 extends Node2D
 
 @export_group("Grid Settings")
-@export var grid_width := 200
-@export var grid_height := 200
-@export var cell_size := 6
+@export var grid_width := 192
+@export var grid_height := 108
+@export var cell_size := 10
 
 @export_group("Simulation Settings")
 @export var initial_agent_count := 1000
@@ -45,7 +45,7 @@ func _process(delta: float):
 
 func spawn_initial_agents():
 	var spawned = 0
-	while spawned < initial_agent_count:
+	while spawned < min(initial_agent_count, (grid_width * grid_height)):
 		var rx = randi() % grid_width
 		var ry = randi() % grid_height
 		
@@ -77,33 +77,38 @@ func update_renderer():
 		mm.set_instance_transform_2d(i, transform2d)
 
 func simulation_step():
+	# 1. Decision Phase: Ask all agents where they WANT to go
+	# We store the results in an array of Vector2i targets
+	var intended_targets: Array[Vector2i] = []
+	intended_targets.resize(agents.size())
+	
+	for i in agents.size():
+		var agent = agents[i]
+		var dir = agent.get_move_decision() # [cite: 8]
+		intended_targets[i] = agent.grid_pos + dir # 
+
+	# 2. Resolution Phase: Execute moves if they are valid in the CURRENT grid
 	for i in agents.size():
 		var agent = agents[i]
 		var current_pos = agent.grid_pos
+		var target = intended_targets[i]
 		
-		# MODULAR: Ask the agent where it wants to go
-		var dir = agent.get_move_decision()
-		var target = current_pos + dir
-		
-		# VALIDATION: The simulation (The World) enforces the rules
-		if is_inside_grid(target) and grid[target.x][target.y] == -1:
-			# Update Logical Grid
+		# Boundary Check 
+		if not is_inside_grid(target):
+			continue
+			
+		# Occupancy Check 
+		# Only move if the spot is empty and not the spot we are already in
+		if target != current_pos and grid[target.x][target.y] == -1:
+			# Update Logical Grid 
 			grid[current_pos.x][current_pos.y] = -1
 			grid[target.x][target.y] = i
 			
-			# Update Agent Data
+			# Update Agent Data 
 			agent.grid_pos = target
 
 func is_inside_grid(p: Vector2i) -> bool:
 	return p.x >= 0 and p.x < grid_width and p.y >= 0 and p.y < grid_height
-
-func get_random_direction() -> Vector2i:
-	var dirs = [
-		Vector2i(1,0), Vector2i(-1,0), 
-		Vector2i(0,1), Vector2i(0,-1),
-		Vector2i(0,0) 
-	]
-	return dirs[randi() % dirs.size()]
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("ui_focus_next"): # Usually the 'Tab' key

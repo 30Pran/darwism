@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dj102ryss23xj" path="res://Scripts/simulation.gd" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://c7ncmwx1gc0ri" path="res://Scripts/grid_drawer.gd" id="2_8gbba"]
 [ext_resource type="PackedScene" uid="uid://dj0ftsvfv3j4t" path="res://Scenes/ui.tscn" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://d0qlpi0ddsalw" path="res://Scenes/camera_2d.gd" id="4_jjvhh"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_jjgbg"]
 
@@ -30,5 +31,9 @@ texture = SubResource("GradientTexture2D_8gbba")
 
 [node name="GridDrawer" type="Node2D" parent="." unique_id=207490395]
 script = ExtResource("2_8gbba")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1634966037]
+position = Vector2(960, 540)
+script = ExtResource("4_jjvhh")
 
 [node name="UI" parent="." unique_id=1843590420 instance=ExtResource("2_bo1nx")]

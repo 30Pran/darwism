@@ -12,7 +12,7 @@ func _init(p: Vector2i, t: int, e: float):
 # This is the "Brain" function
 func get_move_decision() -> Vector2i:
 	# For now, it just wanders, but later this will 
-	# call your Boids/AI logic
+	# call Boids/AI logic
 	return _get_random_direction()
 
 func _get_random_direction() -> Vector2i:
