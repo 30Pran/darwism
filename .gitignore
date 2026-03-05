@@ -1,6 +1,10 @@
 # Godot 4+ specific ignores
 .godot/
+*\~
+.*\~
+*.un\~
 /android/
+.editorconfig
 /Scenes/test.tscn
 /Scripts/simtest.gd
 /Scripts/simtest.gd.uid
