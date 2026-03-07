@@ -15,7 +15,7 @@ var is_dragging := false
 
 # Reference to simulation for bounds calculation
 @onready var sim = $"../Simulation" 
-@onready var mouse_position = $"../UI".get_child(1)
+@onready var grid_position = $"../UI".get_child(1)
 
 func _ready() -> void:
 	target_zoom = zoom
@@ -27,10 +27,10 @@ func _setup_bounds() -> void:
 	var world_h = sim.grid_height * sim.cell_size 
 	
 	# Set camera limits to prevent seeing outside the grid 
-	limit_left = 0
-	limit_top = 0
-	limit_right = world_w
-	limit_bottom = world_h
+	limit_left = -sim.cell_size
+	limit_top = -sim.cell_size
+	limit_right = world_w + sim.cell_size
+	limit_bottom = world_h + sim.cell_size
 	
 	# Calculate zoom needed to fit the world
 	var viewport_size = get_viewport_rect().size
@@ -39,6 +39,7 @@ func _setup_bounds() -> void:
 	var zoom_y = viewport_size.y / world_h
 	
 	min_zoom = min(zoom_x, zoom_y)
+	position_smoothing_speed = sim.cell_size
 
 func _input(event: InputEvent) -> void:
 	# 1. Zoom Logic (Scroll Wheel)
@@ -64,7 +65,7 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	# Smoothly interpolate zoom
 	zoom = zoom.lerp(target_zoom, zoom_lerp_speed * delta)
-	mouse_position.text = str("X: ", mouse_to_grid().x, "  Y: ", mouse_to_grid().y)
+	grid_position.text = str("X: ", mouse_to_grid().x, "  Y: ", mouse_to_grid().y)
 
 func _zoom_camera(direction: int) -> void:
 	var old_zoom = target_zoom
@@ -78,7 +79,7 @@ func _zoom_camera(direction: int) -> void:
 	var zoom_factor = target_zoom.x / old_zoom.x
 	position += mouse_pos * (1.0 - 1.0/zoom_factor)
 
-# Utility function for future interaction
+# Utility function for interaction
 func mouse_to_grid() -> Vector2i:
 	var mouse_pos = get_global_mouse_position()
 	return Vector2i(floor(mouse_pos.x / sim.cell_size), floor(mouse_pos.y / sim.cell_size))

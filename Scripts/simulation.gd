@@ -109,7 +109,3 @@ func simulation_step():
 
 func is_inside_grid(p: Vector2i) -> bool:
 	return p.x >= 0 and p.x < grid_width and p.y >= 0 and p.y < grid_height
-
-func _input(event: InputEvent):
-	if event.is_action_pressed("ui_focus_next"): # Usually the 'Tab' key
-		grid_drawer.visible = !grid_drawer.visible
