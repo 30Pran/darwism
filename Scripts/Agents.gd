@@ -4,9 +4,9 @@ var grid_pos: Vector2i
 var type: int
 var energy: float
 
-func _init(p: Vector2i, t: int, e: float):
-	grid_pos = p
-	type = t
+func _init(pos: Vector2i, typ: int, e: float):
+	grid_pos = pos
+	type = typ
 	energy = e
 
 # This is the "Brain" function

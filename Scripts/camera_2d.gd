@@ -15,7 +15,6 @@ var is_dragging := false
 
 # Reference to simulation for bounds calculation
 @onready var sim = $"../Simulation" 
-@onready var grid_position = $"../UI".get_child(1)
 
 func _ready() -> void:
 	target_zoom = zoom
@@ -27,16 +26,16 @@ func _setup_bounds() -> void:
 	var world_h = sim.grid_height * sim.cell_size 
 	
 	# Set camera limits to prevent seeing outside the grid 
-	limit_left = -sim.cell_size
-	limit_top = -sim.cell_size
-	limit_right = world_w + sim.cell_size
-	limit_bottom = world_h + sim.cell_size
+	limit_left = -2 * sim.cell_size
+	limit_top = -2 * sim.cell_size
+	limit_right = world_w + 2 * sim.cell_size
+	limit_bottom = world_h + 2 * sim.cell_size
 	
 	# Calculate zoom needed to fit the world
 	var viewport_size = get_viewport_rect().size
 	
-	var zoom_x = viewport_size.x / world_w
-	var zoom_y = viewport_size.y / world_h
+	var zoom_x = viewport_size.x / (world_w + 2 * sim.cell_size)
+	var zoom_y = viewport_size.y / (world_h + 2 * sim.cell_size)
 	
 	min_zoom = min(zoom_x, zoom_y)
 	position_smoothing_speed = sim.cell_size
@@ -65,7 +64,6 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	# Smoothly interpolate zoom
 	zoom = zoom.lerp(target_zoom, zoom_lerp_speed * delta)
-	grid_position.text = str("X: ", mouse_to_grid().x, "  Y: ", mouse_to_grid().y)
 
 func _zoom_camera(direction: int) -> void:
 	var old_zoom = target_zoom

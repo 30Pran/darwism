@@ -10,7 +10,7 @@ extends Node2D
 @export var tick_rate := 20.0 
 
 var grid := []
-var agents: Array[Agent] = [] # Typed array for performance
+var agents: Array[Agent] = []
 
 var tick_timer := 0.0
 var time_between_ticks := 0.0
@@ -28,7 +28,6 @@ func _ready() -> void:
 		column.fill(-1) 
 		grid[x] = column
 	
-	#Pass the parameters to the drawer
 	grid_drawer.setup(grid_width, grid_height, cell_size)
 
 	spawn_initial_agents()
@@ -39,7 +38,6 @@ func _process(delta: float):
 	tick_timer += delta
 	if tick_timer >= time_between_ticks:
 		tick_timer = 0.0
-		# $"../../FPS".text = str(Engine.get_frames_per_second()) # Keep if needed
 		simulation_step()
 		update_renderer()
 
@@ -68,7 +66,7 @@ func setup_multimesh():
 
 func update_renderer():
 	var mm : MultiMesh = renderer.multimesh
-	var offset = Vector2(cell_size / 2.0, cell_size / 2.0)
+	var offset = Vector2.ONE * cell_size / 2
 	
 	for i in agents.size():
 		var agent = agents[i] # Accessing the class object
@@ -107,5 +105,5 @@ func simulation_step():
 			# Update Agent Data 
 			agent.grid_pos = target
 
-func is_inside_grid(p: Vector2i) -> bool:
-	return p.x >= 0 and p.x < grid_width and p.y >= 0 and p.y < grid_height
+func is_inside_grid(pos: Vector2i) -> bool:
+	return pos.x >= 0 and pos.x < grid_width and pos.y >= 0 and pos.y < grid_height
