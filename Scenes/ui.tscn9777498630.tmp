@@ -32,12 +32,6 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smcll"]
-bg_color = Color(0.49803922, 0.49803922, 0.49803922, 0.49803922)
-border_width_top = 2
-border_width_right = 2
-border_color = Color(1, 1, 1, 1)
-
 [node name="UI" type="CanvasLayer" unique_id=1843590420]
 script = ExtResource("1_jxero")
 
@@ -129,7 +123,10 @@ anchor_bottom = 1.0
 offset_left = -400.0
 offset_top = -980.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+
+[node name="Button" type="Button" parent="panels/sim_panel" unique_id=296788306]
+layout_mode = 2
+text = "sim"
 
 [node name="pref_panel" type="PanelContainer" parent="panels" unique_id=198066769]
 anchors_preset = 2
@@ -138,7 +135,10 @@ anchor_bottom = 1.0
 offset_left = -400.0
 offset_top = -980.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+
+[node name="Button2" type="Button" parent="panels/pref_panel" unique_id=1680449778]
+layout_mode = 2
+text = "pref"
 
 [node name="cam_panel" type="PanelContainer" parent="panels" unique_id=1120818087]
 anchors_preset = 2
@@ -147,7 +147,10 @@ anchor_bottom = 1.0
 offset_left = -400.0
 offset_top = -980.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+
+[node name="Button3" type="Button" parent="panels/cam_panel" unique_id=748341706]
+layout_mode = 2
+text = "cam"
 
 [connection signal="pressed" from="optbutton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Simulation_setting" to="." method="_on_simulation_setting_pressed"]

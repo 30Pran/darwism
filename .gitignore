@@ -6,5 +6,8 @@
 /android/
 .editorconfig
 /Scenes/test.tscn
+/Scenes/canvas_layer.tscn
 /Scripts/simtest.gd
 /Scripts/simtest.gd.uid
+/Scripts/canvas_layer.gd
+/Scripts/canvas_layer.gd.uid

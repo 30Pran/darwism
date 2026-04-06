@@ -14,7 +14,7 @@ var target_zoom := Vector2.ONE
 var is_dragging := false
 
 # Reference to simulation for bounds calculation
-@onready var sim = $"../Simulation" 
+@onready var sim = $"../Simulation"
 
 func _ready() -> void:
 	target_zoom = zoom
@@ -22,14 +22,14 @@ func _ready() -> void:
 
 func _setup_bounds() -> void:
 	# Calculate world size from simulation parameters 
-	var world_w = sim.grid_width * sim.cell_size 
-	var world_h = sim.grid_height * sim.cell_size 
+	var world_w = sim.grid_width * sim.cell_size
+	var world_h = sim.grid_height * sim.cell_size
 	
 	# Set camera limits to prevent seeing outside the grid 
-	limit_left = -2 * sim.cell_size
-	limit_top = -2 * sim.cell_size
-	limit_right = world_w + 2 * sim.cell_size
-	limit_bottom = world_h + 2 * sim.cell_size
+	limit_left = 0
+	limit_top = 0
+	limit_right = world_w
+	limit_bottom = world_h
 	
 	# Calculate zoom needed to fit the world
 	var viewport_size = get_viewport_rect().size
@@ -48,12 +48,12 @@ func _input(event: InputEvent) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_camera(-1)
 		
-		#ignored when hover over ui
-		if get_viewport().gui_get_hovered_control() != null:
-			return
+		##ignored when hover over ui
+		#if get_viewport().gui_get_hovered_control() != null:
+			#return
 		
 		# 2. Drag Start/Stop
-		if event.button_index == MOUSE_BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_MIDDLE or event.button_index == MOUSE_BUTTON_RIGHT :
 			is_dragging = event.pressed
 
 	# 3. Pan Logic (Mouse Motion)
@@ -77,7 +77,6 @@ func _zoom_camera(direction: int) -> void:
 	var zoom_factor = target_zoom.x / old_zoom.x
 	position += mouse_pos * (1.0 - 1.0/zoom_factor)
 
-# Utility function for interaction
 func mouse_to_grid() -> Vector2i:
 	var mouse_pos = get_global_mouse_position()
 	return Vector2i(floor(mouse_pos.x / sim.cell_size), floor(mouse_pos.y / sim.cell_size))

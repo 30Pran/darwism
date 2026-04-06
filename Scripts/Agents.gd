@@ -13,6 +13,7 @@ func _init(pos: Vector2i, typ: int, e: float):
 func get_move_decision() -> Vector2i:
 	# For now, it just wanders, but later this will 
 	# call Boids/AI logic
+	
 	return _get_random_direction()
 
 func _get_random_direction() -> Vector2i:
