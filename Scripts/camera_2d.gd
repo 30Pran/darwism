@@ -12,6 +12,7 @@ extends Camera2D
 # Internal state
 var target_zoom := Vector2.ONE
 var is_dragging := false
+var drag_toggle := false
 
 # Reference to simulation for bounds calculation
 @onready var sim = $"../Simulation"
@@ -43,19 +44,20 @@ func _setup_bounds() -> void:
 func _input(event: InputEvent) -> void:
 	# 1. Zoom Logic (Scroll Wheel)
 	if event is InputEventMouseButton:
+		if get_viewport().gui_get_hovered_control() != null:
+			return
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			_zoom_camera(1)
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			_zoom_camera(-1)
 		
-		##ignored when hover over ui
-		#if get_viewport().gui_get_hovered_control() != null:
-			#return
-		
 		# 2. Drag Start/Stop
-		if event.button_index == MOUSE_BUTTON_MIDDLE or event.button_index == MOUSE_BUTTON_RIGHT :
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			is_dragging = event.pressed
-
+		
+	if event.is_action_pressed("drag"):
+		is_dragging = !is_dragging
+		
 	# 3. Pan Logic (Mouse Motion)
 	if event is InputEventMouseMotion and is_dragging:
 		# Adjust pan speed based on zoom level so it feels consistent

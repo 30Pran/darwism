@@ -9,14 +9,16 @@ extends Node2D
 @export var initial_agent_count := 1000
 @export var tick_rate := 20.0 
 
+@onready var renderer: MultiMeshInstance2D = $"../AgentsRenderer"
+@onready var grid_drawer := $"../GridDrawer"
+
 var grid := []
 var agents: Array[Agent] = []
 
 var tick_timer := 0.0
 var time_between_ticks := 0.0
 
-@onready var renderer: MultiMeshInstance2D = $"../AgentsRenderer"
-@onready var grid_drawer := $"../GridDrawer"
+var agent_color := Color8(0, 255, 255, 255)
 
 func _ready() -> void:
 	time_between_ticks = 1.0 / tick_rate
@@ -58,6 +60,8 @@ func spawn_initial_agents():
 func setup_multimesh():
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_2D
+	mm.use_colors = true
+	
 	var qm := QuadMesh.new()
 	qm.size = Vector2(cell_size, cell_size) 
 	mm.mesh = qm
@@ -73,6 +77,8 @@ func update_renderer():
 		var screen_pos = (Vector2(agent.grid_pos) * cell_size) + offset
 		var transform2d := Transform2D(0, screen_pos)
 		mm.set_instance_transform_2d(i, transform2d)
+		
+		mm.set_instance_color(i, agent_color)
 
 func simulation_step():
 	# 1. Decision Phase: Ask all agents where they WANT to go

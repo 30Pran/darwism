@@ -17,6 +17,13 @@ border_color = Color(1, 1, 1, 1)
 shadow_color = Color(0, 0, 0, 0.7607843)
 shadow_size = 10
 
+[sub_resource type="InputEventKey" id="InputEventKey_q7pk6"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_smcll"]
+events = [SubResource("InputEventKey_q7pk6")]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdvrb"]
 draw_center = false
 
@@ -32,11 +39,90 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
 
+[sub_resource type="InputEventKey" id="InputEventKey_qdvrb"]
+device = -1
+shift_pressed = true
+keycode = 83
+unicode = 83
+
+[sub_resource type="Shortcut" id="Shortcut_2246s"]
+events = [SubResource("InputEventKey_qdvrb")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_nf4gj"]
+device = -1
+shift_pressed = true
+keycode = 80
+unicode = 80
+
+[sub_resource type="Shortcut" id="Shortcut_q7pk6"]
+events = [SubResource("InputEventKey_nf4gj")]
+
+[sub_resource type="InputEventKey" id="InputEventKey_2246s"]
+device = -1
+shift_pressed = true
+keycode = 67
+unicode = 67
+
+[sub_resource type="Shortcut" id="Shortcut_m78vo"]
+events = [SubResource("InputEventKey_2246s")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qdvrb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nf4gj"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_qdvrb"]
+color = Color(1, 1, 1, 1)
+thickness = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryf15"]
+draw_center = false
+
+[sub_resource type="InputEventAction" id="InputEventAction_qdvrb"]
+action = &"toggle_grid"
+
+[sub_resource type="Shortcut" id="Shortcut_nf4gj"]
+events = [SubResource("InputEventAction_qdvrb")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2246s"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_smcll"]
-bg_color = Color(0.49803922, 0.49803922, 0.49803922, 0.49803922)
+draw_center = false
+border_width_left = 2
 border_width_top = 2
 border_width_right = 2
+border_width_bottom = 2
 border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+expand_margin_bottom = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3r70p"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fs27"]
+bg_color = Color(1, 1, 1, 1)
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
 
 [node name="UI" type="CanvasLayer" unique_id=1843590420]
 script = ExtResource("1_jxero")
@@ -76,6 +162,7 @@ grow_horizontal = 0
 pivot_offset = Vector2(50, 50)
 theme_override_styles/normal = SubResource("StyleBoxFlat_m78vo")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
+shortcut = SubResource("Shortcut_smcll")
 icon = ExtResource("2_qdvrb")
 flat = true
 expand_icon = true
@@ -100,6 +187,7 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nf4gj")
+shortcut = SubResource("Shortcut_2246s")
 text = "Simulation"
 
 [node name="Preference_setting" type="Button" parent="optpanel/HBoxContainer" unique_id=523843712]
@@ -109,6 +197,7 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nf4gj")
+shortcut = SubResource("Shortcut_q7pk6")
 text = "Preferences"
 
 [node name="Camera_setting" type="Button" parent="optpanel/HBoxContainer" unique_id=2072509449]
@@ -118,6 +207,7 @@ theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nf4gj")
+shortcut = SubResource("Shortcut_m78vo")
 text = "Camera"
 
 [node name="panels" type="Node" parent="." unique_id=421842866]
@@ -129,27 +219,179 @@ anchor_bottom = 1.0
 offset_left = -400.0
 offset_top = -980.0
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qdvrb")
 
 [node name="pref_panel" type="PanelContainer" parent="panels" unique_id=198066769]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = -400.0
-offset_top = -980.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+offset_top = -200.0
+offset_bottom = 200.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nf4gj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="panels/pref_panel" unique_id=928589878]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="pref_label" type="Label" parent="panels/pref_panel/VBoxContainer" unique_id=662299991]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "  Preferences"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="panels/pref_panel/VBoxContainer" unique_id=1042410614]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=678944050]
+layout_mode = 2
+
+[node name="agent_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer" unique_id=455039133]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Agents"
+vertical_alignment = 1
+
+[node name="agent_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer" unique_id=586365132]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0, 1, 1, 1)
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=1196268661]
+layout_mode = 2
+
+[node name="grid_visiibility_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=498609259]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Grid Visible"
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=1239300088]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_ryf15")
+button_pressed = true
+shortcut = SubResource("Shortcut_nf4gj")
+flat = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=596192147]
+layout_mode = 2
+
+[node name="grid_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer2" unique_id=1506616734]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Grid"
+vertical_alignment = 1
+
+[node name="grid_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer2" unique_id=1777478392]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=1029188240]
+layout_mode = 2
+
+[node name="ui_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer3" unique_id=804843012]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    UI"
+vertical_alignment = 1
+
+[node name="ui_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer3" unique_id=255338367]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 1, 1)
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=842646331]
+layout_mode = 2
+
+[node name="bg_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer4" unique_id=531126616]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Background"
+vertical_alignment = 1
+
+[node name="bg_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer4" unique_id=1901640710]
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.3019608, 0.3019608, 0.3019608, 1)
 
 [node name="cam_panel" type="PanelContainer" parent="panels" unique_id=1120818087]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = -400.0
-offset_top = -980.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_smcll")
+offset_top = -200.0
+offset_bottom = 200.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2246s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="panels/cam_panel" unique_id=1491287850]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="cam_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=1154815292]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "  Camera Setting"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="panels/cam_panel/VBoxContainer" unique_id=1902935627]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
+
+[node name="zoom_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=872317509]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Zoom Sensitivity"
+vertical_alignment = 1
+
+[node name="set_zoom_speed" type="HSlider" parent="panels/cam_panel/VBoxContainer" unique_id=72186290]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/slider = SubResource("StyleBoxFlat_smcll")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_3r70p")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8fs27")
+min_value = 0.01
+max_value = 2.01
+step = 0.1
+value = 0.11
+
+[node name="drag_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=1719340877]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Drag Sensitivity"
+vertical_alignment = 1
+
+[node name="set_drag_speed" type="HSlider" parent="panels/cam_panel/VBoxContainer" unique_id=979318757]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/slider = SubResource("StyleBoxFlat_smcll")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_3r70p")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8fs27")
+min_value = 0.5
+max_value = 10.0
+step = 0.5
+value = 1.0
 
 [connection signal="pressed" from="optbutton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Simulation_setting" to="." method="_on_simulation_setting_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Preference_setting" to="." method="_on_preference_setting_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Camera_setting" to="." method="_on_camera_setting_pressed"]
+[connection signal="color_changed" from="panels/pref_panel/VBoxContainer/HBoxContainer/agent_ColorPickerButton" to="." method="_on_agent_color_picker_button_color_changed"]
+[connection signal="toggled" from="panels/pref_panel/VBoxContainer/HBoxContainer5/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="color_changed" from="panels/pref_panel/VBoxContainer/HBoxContainer2/grid_ColorPickerButton" to="." method="_on_grid_color_picker_button_color_changed"]
+[connection signal="color_changed" from="panels/pref_panel/VBoxContainer/HBoxContainer4/bg_ColorPickerButton" to="." method="_on_bg_color_picker_button_color_changed"]
+[connection signal="drag_ended" from="panels/cam_panel/VBoxContainer/set_zoom_speed" to="." method="_on_set_zoom_speed_drag_ended"]
+[connection signal="drag_ended" from="panels/cam_panel/VBoxContainer/set_drag_speed" to="." method="_on_set_drag_speed_drag_ended"]
