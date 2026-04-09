@@ -29,7 +29,7 @@ func _setup_bounds() -> void:
 	# Set camera limits to prevent seeing outside the grid 
 	limit_left = 0
 	limit_top = 0
-	limit_right = world_w
+	limit_right = world_w 
 	limit_bottom = world_h
 	
 	# Calculate zoom needed to fit the world

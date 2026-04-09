@@ -1,7 +1,22 @@
 [gd_scene format=3 uid="uid://dj0ftsvfv3j4t"]
 
 [ext_resource type="Script" uid="uid://s6fr17x4ilyw" path="res://Scripts/ui.gd" id="1_jxero"]
+[ext_resource type="Theme" uid="uid://dnblfr5dle3f1" path="res://Theme/style.tres" id="2_nf4gj"]
 [ext_resource type="Texture2D" uid="uid://bmqbijw216vii" path="res://Texture/hamburgermenu-removebg.png" id="2_qdvrb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m78vo"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7pk6"]
+content_margin_top = 10.0
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(1, 1, 1, 1)
+shadow_color = Color(0, 0, 0, 0.7607843)
+shadow_size = 10
 
 [sub_resource type="InputEventKey" id="InputEventKey_q7pk6"]
 device = -1
@@ -14,17 +29,7 @@ events = [SubResource("InputEventKey_q7pk6")]
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2246s"]
-draw_center = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7pk6"]
-content_margin_top = 10.0
-draw_center = false
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(1, 1, 1, 1)
-shadow_size = 10
+bg_color = Color(0, 0, 0, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nf4gj"]
 bg_color = Color(1, 1, 1, 1)
@@ -126,6 +131,7 @@ script = ExtResource("1_jxero")
 [node name="FPS" type="Label" parent="." unique_id=827849368]
 offset_right = 80.0
 offset_bottom = 50.0
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 32
 text = "60.0"
 horizontal_alignment = 1
@@ -141,6 +147,7 @@ offset_left = -248.0
 offset_top = -58.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 32
 text = "X: 1920  Y: 1080"
 horizontal_alignment = 1
@@ -154,6 +161,9 @@ offset_left = -100.0
 offset_bottom = 100.0
 grow_horizontal = 0
 pivot_offset = Vector2(50, 50)
+theme = ExtResource("2_nf4gj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_m78vo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
 shortcut = SubResource("Shortcut_smcll")
 icon = ExtResource("2_qdvrb")
 flat = true
@@ -171,10 +181,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qdvrb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="optpanel" unique_id=1409038954]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="Simulation_setting" type="Button" parent="optpanel/HBoxContainer" unique_id=555155053]
 custom_minimum_size = Vector2(556, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
@@ -185,6 +197,7 @@ text = "Simulation"
 [node name="Preference_setting" type="Button" parent="optpanel/HBoxContainer" unique_id=523843712]
 custom_minimum_size = Vector2(556, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
@@ -195,6 +208,7 @@ text = "Preferences"
 [node name="Camera_setting" type="Button" parent="optpanel/HBoxContainer" unique_id=2072509449]
 custom_minimum_size = Vector2(556, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 48
 theme_override_styles/normal = SubResource("StyleBoxFlat_2246s")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_q7pk6")
@@ -225,24 +239,29 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_nf4gj")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="panels/pref_panel" unique_id=928589878]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_constants/separation = 15
 
 [node name="pref_label" type="Label" parent="panels/pref_panel/VBoxContainer" unique_id=662299991]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 45
 text = "  Preferences"
 vertical_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="panels/pref_panel/VBoxContainer" unique_id=1042410614]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=678944050]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="agent_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer" unique_id=455039133]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Agents"
 vertical_alignment = 1
@@ -254,10 +273,12 @@ color = Color(0, 1, 1, 1)
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=1196268661]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="grid_visiibility_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=498609259]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Grid Visible"
 vertical_alignment = 1
@@ -265,6 +286,7 @@ vertical_alignment = 1
 [node name="CheckButton" type="CheckButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=1239300088]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("2_nf4gj")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ryf15")
 button_pressed = true
 shortcut = SubResource("Shortcut_nf4gj")
@@ -272,10 +294,12 @@ flat = true
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=596192147]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="grid_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer2" unique_id=1506616734]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Grid"
 vertical_alignment = 1
@@ -286,10 +310,12 @@ size_flags_horizontal = 3
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=1029188240]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="ui_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer3" unique_id=804843012]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    UI"
 vertical_alignment = 1
@@ -301,10 +327,12 @@ color = Color(1, 1, 1, 1)
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=842646331]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 
 [node name="bg_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer4" unique_id=531126616]
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Background"
 vertical_alignment = 1
@@ -326,20 +354,24 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_2246s")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="panels/cam_panel" unique_id=1491287850]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_constants/separation = 15
 
 [node name="cam_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=1154815292]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 45
 text = "  Camera Setting"
 vertical_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="panels/cam_panel/VBoxContainer" unique_id=1902935627]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
 
 [node name="zoom_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=872317509]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Zoom Sensitivity"
 vertical_alignment = 1
@@ -349,6 +381,7 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("2_nf4gj")
 theme_override_styles/slider = SubResource("StyleBoxFlat_smcll")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_3r70p")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8fs27")
@@ -359,6 +392,7 @@ value = 0.11
 
 [node name="drag_label" type="Label" parent="panels/cam_panel/VBoxContainer" unique_id=1719340877]
 layout_mode = 2
+theme = ExtResource("2_nf4gj")
 theme_override_font_sizes/font_size = 30
 text = "    Drag Sensitivity"
 vertical_alignment = 1
@@ -368,6 +402,7 @@ custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme = ExtResource("2_nf4gj")
 theme_override_styles/slider = SubResource("StyleBoxFlat_smcll")
 theme_override_styles/grabber_area = SubResource("StyleBoxFlat_3r70p")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_8fs27")

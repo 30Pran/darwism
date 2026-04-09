@@ -1,5 +1,35 @@
 extends CanvasLayer
 
+@onready var ui_array := [
+	$FPS, $position, $optbutton, $optpanel/HBoxContainer, 
+	$optpanel/HBoxContainer/Simulation_setting, $optpanel/HBoxContainer/Preference_setting, 
+	$optpanel/HBoxContainer/Camera_setting, $panels/pref_panel/VBoxContainer, $panels/pref_panel/VBoxContainer/pref_label, 
+	$panels/pref_panel/VBoxContainer/HSeparator, $panels/pref_panel/VBoxContainer/HBoxContainer, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer/agent_label, $panels/pref_panel/VBoxContainer/HBoxContainer/agent_ColorPickerButton, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer5, $panels/pref_panel/VBoxContainer/HBoxContainer5/grid_visiibility_label, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer5/CheckButton, $panels/pref_panel/VBoxContainer/HBoxContainer2, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer2/grid_label, $panels/pref_panel/VBoxContainer/HBoxContainer2/grid_ColorPickerButton, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer3, $panels/pref_panel/VBoxContainer/HBoxContainer3/ui_label, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer3/ui_ColorPickerButton, $panels/pref_panel/VBoxContainer/HBoxContainer4, 
+	$panels/pref_panel/VBoxContainer/HBoxContainer4/bg_label, $panels/pref_panel/VBoxContainer/HBoxContainer4/bg_ColorPickerButton, 
+	$panels/cam_panel/VBoxContainer, $panels/cam_panel/VBoxContainer/cam_label, $panels/cam_panel/VBoxContainer/HSeparator, 
+	$panels/cam_panel/VBoxContainer/zoom_label, $panels/cam_panel/VBoxContainer/set_zoom_speed, $panels/cam_panel/VBoxContainer/drag_label, 
+	$panels/cam_panel/VBoxContainer/set_drag_speed, 
+]
+
+@onready var separator := [
+	$panels/pref_panel/VBoxContainer/HSeparator, $panels/cam_panel/VBoxContainer/HSeparator
+]
+
+@onready var boxes := [
+	$optpanel/HBoxContainer/Simulation_setting, $optpanel/HBoxContainer/Preference_setting,
+	$optpanel/HBoxContainer/Camera_setting
+]
+
+@onready var icons := [
+	$optbutton
+]
+
 @onready var fps_label = $FPS
 @onready var grid_position = $position
 
@@ -80,3 +110,42 @@ func _on_grid_color_picker_button_color_changed(color: Color) -> void:
 
 func _on_bg_color_picker_button_color_changed(color: Color) -> void:
 	RenderingServer.set_default_clear_color(color)
+
+
+func _on_ui_color_picker_button_color_changed(color: Color) -> void:
+	
+	var normal_style = StyleBoxFlat.new()
+	var pressed_style = StyleBoxFlat.new()
+	var hover_style = StyleBoxFlat.new()
+	
+	var line_style = StyleBoxLine.new()
+	
+	normal_style.draw_center = false
+	normal_style.border_color = color
+	
+	pressed_style.draw_center = false
+	pressed_style.set_border_width_all(5)
+	pressed_style.border_color = color
+	pressed_style.shadow_color = Color.BLACK
+	pressed_style.shadow_size = 10
+	
+	hover_style.draw_center = false
+	hover_style.set_border_width_all(3)
+	hover_style.border_color = color
+	
+	line_style.color = color
+	line_style.thickness = 3
+	
+	for i in range(ui_array.size()):
+		ui_array[i].add_theme_color_override("font_color", color)
+	
+	for i in range(separator.size()):
+		separator[i].add_theme_stylebox_override("separator", line_style)
+	
+	for i in range(boxes.size()):
+		boxes[i].add_theme_stylebox_override("normal", normal_style)
+		boxes[i].add_theme_stylebox_override("pressed", pressed_style)
+		boxes[i].add_theme_stylebox_override("hover", hover_style)
+	
+	for i in range(icons.size()):
+		icons[i].add_theme_color_override("icon_normal_color", color)
