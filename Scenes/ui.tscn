@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://s6fr17x4ilyw" path="res://Scripts/ui.gd" id="1_jxero"]
 [ext_resource type="Texture2D" uid="uid://bmqbijw216vii" path="res://Texture/hamburgermenu-removebg.png" id="2_qdvrb"]
+[ext_resource type="Texture2D" uid="uid://bs6pigfpfwf7h" path="res://Texture/reloadbtn.png" id="3_nf4gj"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_q7pk6"]
 device = -1
@@ -37,38 +38,35 @@ border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="InputEventKey" id="InputEventKey_qdvrb"]
 device = -1
-shift_pressed = true
-keycode = 83
-unicode = 83
+keycode = 81
+unicode = 113
 
 [sub_resource type="Shortcut" id="Shortcut_2246s"]
 events = [SubResource("InputEventKey_qdvrb")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_nf4gj"]
 device = -1
-shift_pressed = true
-keycode = 80
-unicode = 80
+keycode = 87
+unicode = 119
 
 [sub_resource type="Shortcut" id="Shortcut_q7pk6"]
 events = [SubResource("InputEventKey_nf4gj")]
 
 [sub_resource type="InputEventKey" id="InputEventKey_2246s"]
 device = -1
-shift_pressed = true
-keycode = 67
-unicode = 67
+keycode = 69
+unicode = 101
 
 [sub_resource type="Shortcut" id="Shortcut_m78vo"]
 events = [SubResource("InputEventKey_2246s")]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qdvrb"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nf4gj"]
-
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_qdvrb"]
 color = Color(1, 1, 1, 1)
 thickness = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nf4gj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ryf15"]
 draw_center = false
@@ -150,10 +148,10 @@ vertical_alignment = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -100.0
-offset_bottom = 100.0
+offset_left = -64.0
+offset_bottom = 64.0
 grow_horizontal = 0
-pivot_offset = Vector2(50, 50)
+pivot_offset = Vector2(32, 32)
 shortcut = SubResource("Shortcut_smcll")
 icon = ExtResource("2_qdvrb")
 flat = true
@@ -205,13 +203,135 @@ text = "Camera"
 [node name="panels" type="Node" parent="." unique_id=421842866]
 
 [node name="sim_panel" type="PanelContainer" parent="panels" unique_id=990941038]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = -400.0
-offset_top = -980.0
-grow_vertical = 0
+offset_top = -225.0
+offset_bottom = 225.0
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_qdvrb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="panels/sim_panel" unique_id=1809398922]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="sim_label" type="Label" parent="panels/sim_panel/VBoxContainer" unique_id=1134089144]
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "  Simulation"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="panels/sim_panel/VBoxContainer" unique_id=90879994]
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="panels/sim_panel/VBoxContainer" unique_id=476383007]
+layout_mode = 2
+
+[node name="agent_count_label" type="Label" parent="panels/sim_panel/VBoxContainer/HBoxContainer" unique_id=841886022]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Agent Count"
+
+[node name="agent_count_SpinBox" type="SpinBox" parent="panels/sim_panel/VBoxContainer/HBoxContainer" unique_id=1633387864]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 10000.0
+value = 1000.0
+rounded = true
+alignment = 1
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="panels/sim_panel/VBoxContainer" unique_id=792286055]
+layout_mode = 2
+
+[node name="tick_rate_label" type="Label" parent="panels/sim_panel/VBoxContainer/HBoxContainer5" unique_id=1389639333]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Tick Right"
+
+[node name="tick_rate_SpinBox" type="SpinBox" parent="panels/sim_panel/VBoxContainer/HBoxContainer5" unique_id=1944443347]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 1000.0
+value = 20.0
+rounded = true
+alignment = 1
+suffix = "fps"
+
+[node name="grid_size_label" type="Label" parent="panels/sim_panel/VBoxContainer" unique_id=1128457594]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 37
+text = "   Grid Size :"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="panels/sim_panel/VBoxContainer" unique_id=1756351164]
+layout_mode = 2
+
+[node name="height_label" type="Label" parent="panels/sim_panel/VBoxContainer/HBoxContainer2" unique_id=1750676017]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Height"
+
+[node name="grid_height_SpinBox" type="SpinBox" parent="panels/sim_panel/VBoxContainer/HBoxContainer2" unique_id=187148233]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 10000.0
+value = 192.0
+rounded = true
+alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="panels/sim_panel/VBoxContainer" unique_id=761866505]
+layout_mode = 2
+
+[node name="width_label" type="Label" parent="panels/sim_panel/VBoxContainer/HBoxContainer3" unique_id=1207554064]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Width"
+
+[node name="grid_width_SpinBox" type="SpinBox" parent="panels/sim_panel/VBoxContainer/HBoxContainer3" unique_id=821863120]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 2.0
+max_value = 10000.0
+value = 108.0
+rounded = true
+alignment = 1
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="panels/sim_panel/VBoxContainer" unique_id=1679651430]
+layout_mode = 2
+
+[node name="cell_size_label" type="Label" parent="panels/sim_panel/VBoxContainer/HBoxContainer4" unique_id=1993503831]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "    Cell Size"
+
+[node name="cell_size_SpinBox" type="SpinBox" parent="panels/sim_panel/VBoxContainer/HBoxContainer4" unique_id=157082408]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+value = 10.0
+rounded = true
+alignment = 1
+suffix = "px"
+
+[node name="reload" type="Button" parent="panels/sim_panel/VBoxContainer" unique_id=935290659]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("3_nf4gj")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="pref_panel" type="PanelContainer" parent="panels" unique_id=198066769]
 anchors_preset = 4
@@ -228,6 +348,7 @@ layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="pref_label" type="Label" parent="panels/pref_panel/VBoxContainer" unique_id=662299991]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "  Preferences"
@@ -241,6 +362,7 @@ theme_override_styles/separator = SubResource("StyleBoxLine_qdvrb")
 layout_mode = 2
 
 [node name="agent_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer" unique_id=455039133]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -248,6 +370,7 @@ text = "    Agents"
 vertical_alignment = 1
 
 [node name="agent_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer" unique_id=586365132]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(0, 1, 1, 1)
@@ -256,6 +379,7 @@ color = Color(0, 1, 1, 1)
 layout_mode = 2
 
 [node name="grid_visiibility_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=498609259]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -263,6 +387,7 @@ text = "    Grid Visible"
 vertical_alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer5" unique_id=1239300088]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_ryf15")
@@ -274,6 +399,7 @@ flat = true
 layout_mode = 2
 
 [node name="grid_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer2" unique_id=1506616734]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -281,13 +407,16 @@ text = "    Grid"
 vertical_alignment = 1
 
 [node name="grid_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer2" unique_id=1777478392]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+color = Color(0.29411766, 0.29411766, 0.29411766, 1)
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="panels/pref_panel/VBoxContainer" unique_id=1029188240]
 layout_mode = 2
 
 [node name="ui_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer3" unique_id=804843012]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -295,6 +424,7 @@ text = "    UI"
 vertical_alignment = 1
 
 [node name="ui_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer3" unique_id=255338367]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 1)
@@ -303,6 +433,7 @@ color = Color(1, 1, 1, 1)
 layout_mode = 2
 
 [node name="bg_label" type="Label" parent="panels/pref_panel/VBoxContainer/HBoxContainer4" unique_id=531126616]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(210, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -310,9 +441,9 @@ text = "    Background"
 vertical_alignment = 1
 
 [node name="bg_ColorPickerButton" type="ColorPickerButton" parent="panels/pref_panel/VBoxContainer/HBoxContainer4" unique_id=1901640710]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-color = Color(0.3019608, 0.3019608, 0.3019608, 1)
 
 [node name="cam_panel" type="PanelContainer" parent="panels" unique_id=1120818087]
 anchors_preset = 4
@@ -376,10 +507,28 @@ max_value = 10.0
 step = 0.5
 value = 1.0
 
+[node name="Label" type="Label" parent="." unique_id=992145016]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -31.5
+offset_right = 20.0
+offset_bottom = 31.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 45
+
 [connection signal="pressed" from="optbutton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Simulation_setting" to="." method="_on_simulation_setting_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Preference_setting" to="." method="_on_preference_setting_pressed"]
 [connection signal="pressed" from="optpanel/HBoxContainer/Camera_setting" to="." method="_on_camera_setting_pressed"]
+[connection signal="value_changed" from="panels/sim_panel/VBoxContainer/HBoxContainer/agent_count_SpinBox" to="." method="_on_agent_count_spin_box_value_changed"]
+[connection signal="value_changed" from="panels/sim_panel/VBoxContainer/HBoxContainer5/tick_rate_SpinBox" to="." method="_on_tick_rate_spin_box_value_changed"]
+[connection signal="value_changed" from="panels/sim_panel/VBoxContainer/HBoxContainer2/grid_height_SpinBox" to="." method="_on_grid_height_spin_box_value_changed"]
+[connection signal="value_changed" from="panels/sim_panel/VBoxContainer/HBoxContainer3/grid_width_SpinBox" to="." method="_on_grid_width_spin_box_value_changed"]
 [connection signal="color_changed" from="panels/pref_panel/VBoxContainer/HBoxContainer/agent_ColorPickerButton" to="." method="_on_agent_color_picker_button_color_changed"]
 [connection signal="toggled" from="panels/pref_panel/VBoxContainer/HBoxContainer5/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="color_changed" from="panels/pref_panel/VBoxContainer/HBoxContainer2/grid_ColorPickerButton" to="." method="_on_grid_color_picker_button_color_changed"]

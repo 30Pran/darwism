@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://bmyn8h5qu18fh"]
+
+[ext_resource type="Script" uid="uid://dj102ryss23xj" path="res://Scripts/simulation.gd" id="1_jjgbg"]
+[ext_resource type="Script" uid="uid://c7ncmwx1gc0ri" path="res://Scripts/grid_drawer.gd" id="2_8gbba"]
+[ext_resource type="PackedScene" uid="uid://dj0ftsvfv3j4t" path="res://Scenes/ui.tscn" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://d0qlpi0ddsalw" path="res://Scripts/camera_2d.gd" id="4_jjvhh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jjvhh"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_kry3j"]
+material = SubResource("StandardMaterial3D_jjvhh")
+
+[sub_resource type="MultiMesh" id="MultiMesh_bo1nx"]
+use_colors = true
+mesh = SubResource("QuadMesh_kry3j")
+
+[node name="main" type="Node2D" unique_id=104528722]
+
+[node name="Simulation" type="Node2D" parent="." unique_id=21415413]
+script = ExtResource("1_jjgbg")
+
+[node name="AgentsRenderer" type="MultiMeshInstance2D" parent="." unique_id=78663251]
+multimesh = SubResource("MultiMesh_bo1nx")
+
+[node name="GridDrawer" type="Node2D" parent="." unique_id=207490395]
+script = ExtResource("2_8gbba")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1634966037]
+position = Vector2(960, 540)
+limit_left = 0
+limit_top = 0
+limit_smoothed = true
+position_smoothing_speed = 10.0
+script = ExtResource("4_jjvhh")
+
+[node name="UI" parent="." unique_id=1843590420 instance=ExtResource("2_bo1nx")]

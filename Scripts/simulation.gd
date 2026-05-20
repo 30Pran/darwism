@@ -7,109 +7,122 @@ extends Node2D
 
 @export_group("Simulation Settings")
 @export var initial_agent_count := 1000
-@export var tick_rate := 20.0 
+@export var tick_rate : float = 20.0
+@export var social_force := 0.0
+@export var radius := 2
 
 @onready var renderer: MultiMeshInstance2D = $"../AgentsRenderer"
 @onready var grid_drawer := $"../GridDrawer"
 
 var grid := []
 var agents: Array[Agent] = []
-
 var tick_timer := 0.0
 var time_between_ticks := 0.0
-
 var agent_color := Color8(0, 255, 255, 255)
 
 func _ready() -> void:
-	time_between_ticks = 1.0 / tick_rate
-	
-	grid.resize(grid_width)
-	for x in range(grid_width):
-		var column = []
-		column.resize(grid_height)
-		column.fill(-1) 
-		grid[x] = column
-	
-	grid_drawer.setup(grid_width, grid_height, cell_size)
-
-	spawn_initial_agents()
-	setup_multimesh()
-	update_renderer()
+	update_tick_timing()
+	init_grid()           # Pre-allocate grid memory 
+	setup_multimesh()     # Create the MultiMesh object once 
+	rebuild_simulation()  # Initial population
 
 func _process(delta: float):
 	tick_timer += delta
-	if tick_timer >= time_between_ticks:
-		tick_timer = 0.0
+	while tick_timer >= time_between_ticks:
+		tick_timer -= time_between_ticks
+		#tick_timer = 0.0
 		simulation_step()
-		update_renderer()
+	update_renderer()
 
-func spawn_initial_agents():
-	var spawned = 0
-	while spawned < min(initial_agent_count, (grid_width * grid_height)):
-		var rx = randi() % grid_width
-		var ry = randi() % grid_height
-		
-		if grid[rx][ry] == -1:
-			# Create a new instance of the Agent class
-			var new_agent = Agent.new(Vector2i(rx, ry), 0, 100.0)
-			
-			agents.append(new_agent)
-			grid[rx][ry] = agents.size() - 1
-			spawned += 1
+# --- INITIALIZATION FUNCTIONS ---
+
+func update_tick_timing():
+	time_between_ticks = 1.0 / tick_rate
+
+func init_grid():
+	grid.resize(grid_width)
+	for x in range(grid_width):
+		grid[x] = []
+		grid[x].resize(grid_height)
+		grid[x].fill(-1) # Fill once during init 
 
 func setup_multimesh():
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_2D
 	mm.use_colors = true
-	
 	var qm := QuadMesh.new()
 	qm.size = Vector2(cell_size, cell_size) 
 	mm.mesh = qm
-	mm.instance_count = agents.size()
 	renderer.multimesh = mm
+
+# --- RUNTIME UPDATE FUNCTIONS ---
+
+func clear_grid():
+	# Use fast fill instead of recreating arrays 
+	for x in range(grid_width):
+		grid[x].fill(-1)
+
+func rebuild_simulation():
+	clear_grid()
+	
+	# Reuse the agents array memory [cite: 16]
+	agents.resize(initial_agent_count)
+	
+	for i in range(initial_agent_count):
+		var pos := _get_random_empty_pos()
+		# Direct index assignment is faster than append() [cite: 16]
+		agents[i] = Agent.new(pos, 0, 100.0)
+		grid[pos.x][pos.y] = i
+	
+	# Only update instance count instead of recreating MultiMesh [cite: 16]
+	renderer.multimesh.instance_count = agents.size()
+	grid_drawer.setup(grid_width, grid_height, cell_size)
+	update_renderer()
+
+func _get_random_empty_pos() -> Vector2i:
+	# Basic safety to prevent infinite loop if grid is full
+	for attempt in range(100):
+		var rx = randi() % grid_width
+		var ry = randi() % grid_height
+		if grid[rx][ry] == -1:
+			return Vector2i(rx, ry)
+	return Vector2i(0, 0)
+
+# --- CORE LOGIC ---
+
+func simulation_step():
+	var size = agents.size()
+	var intended_targets: Array[Vector2i] = []
+	intended_targets.resize(size)
+	
+	# Phase 1: Decisions [cite: 17]
+	for i in range(size):
+		var agent = agents[i]
+		var dir = agent.get_move_decision(grid, grid_width, grid_height, radius, social_force)
+
+		intended_targets[i] = agents[i].grid_pos + dir
+
+	# Phase 2: Resolution [cite: 18]
+	for i in range(size):
+		var agent = agents[i]
+		var target = intended_targets[i]
+		
+		if is_inside_grid(target) and target != agent.grid_pos:
+			if grid[target.x][target.y] == -1:
+				grid[agent.grid_pos.x][agent.grid_pos.y] = -1
+				grid[target.x][target.y] = i
+				agent.grid_pos = target
 
 func update_renderer():
 	var mm : MultiMesh = renderer.multimesh
-	var offset = Vector2.ONE * cell_size / 2
+	var offset = Vector2.ONE * (cell_size / 2.0)
 	
-	for i in agents.size():
-		var agent = agents[i] # Accessing the class object
+	# Fast loop using range() and pre-calculated transform components 
+	for i in range(agents.size()):
+		var agent = agents[i]
 		var screen_pos = (Vector2(agent.grid_pos) * cell_size) + offset
-		var transform2d := Transform2D(0, screen_pos)
-		mm.set_instance_transform_2d(i, transform2d)
-		
+		mm.set_instance_transform_2d(i, Transform2D(0, screen_pos))
 		mm.set_instance_color(i, agent_color)
-
-func simulation_step():
-	# 1. Decision Phase: Ask all agents where they WANT to go
-	# We store the results in an array of Vector2i targets
-	var intended_targets: Array[Vector2i] = []
-	intended_targets.resize(agents.size())
-	
-	for i in agents.size():
-		var agent = agents[i]
-		var dir = agent.get_move_decision() # [cite: 8]
-		intended_targets[i] = agent.grid_pos + dir # 
-
-	# 2. Resolution Phase: Execute moves if they are valid in the CURRENT grid
-	for i in agents.size():
-		var agent = agents[i]
-		var current_pos = agent.grid_pos
-		var target = intended_targets[i]
-		
-		# Boundary Check 
-		if not is_inside_grid(target):
-			continue
-			
-		# Occupancy Check 
-		# Only move if the spot is empty and not the spot we are already in
-		if target != current_pos and grid[target.x][target.y] == -1:
-			# Update Logical Grid 
-			grid[current_pos.x][current_pos.y] = -1
-			grid[target.x][target.y] = i
-			
-			# Update Agent Data 
-			agent.grid_pos = target
 
 func is_inside_grid(pos: Vector2i) -> bool:
 	return pos.x >= 0 and pos.x < grid_width and pos.y >= 0 and pos.y < grid_height

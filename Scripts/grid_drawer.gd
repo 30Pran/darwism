@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var color := Color(0.0, 0.0, 0.0, 1.0)
+@export var color := Color(0.296, 0.296, 0.296, 1.0)
 var grid_width: int
 var grid_height: int
 var cell_size: int
